@@ -5,7 +5,6 @@ class GymMembershipSystem:
             'Premium': 80,
             'Family': 120
         }
-        #comentario
         self.additional_features = {
             'Personal Training': 30,
             'Group Classes': 20
