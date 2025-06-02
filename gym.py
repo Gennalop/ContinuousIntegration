@@ -40,6 +40,7 @@ class GymMembershipSystem:
                 break
             elif feature in self.additional_features:
                 self.selected_features.append(feature)
+                print("Feature added to your plan!")
             else:
                 print("Invalid feature. Please select again.")
 
