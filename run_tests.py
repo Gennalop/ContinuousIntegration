@@ -83,6 +83,13 @@ class GymMembershipSystemTest(unittest.TestCase):
             self.system.selected_plan = 'Invalid'
             self.system.calculate_cost()
 
+    def test_invalid_feature_ignored(self):
+        self.system.selected_plan = 'Basic'
+        self.system.selected_features = ['Invalid Feature']
+        self.system.group_members = 1
+        with self.assertRaises(KeyError):
+            self.system.calculate_cost()
+
     def test_duplicate_features(self):
         self.system.selected_plan = 'Basic'
         self.system.selected_features = ['Personal Training', 'Personal Training']
@@ -106,6 +113,25 @@ class GymMembershipSystemTest(unittest.TestCase):
         expected = total - group_discount
         cost = self.system.calculate_cost()
         self.assertAlmostEqual(cost, expected)
+
+    def test_premium_group_discount_and_surcharge(self):
+        self.system.selected_plan = 'Premium'
+        self.system.selected_features = ['Personal Training', 'Group Classes']
+        self.system.group_members = 2
+        base = 80
+        features = 30 + 20
+        subtotal = base + features
+        surcharge = subtotal * 0.15
+        total = subtotal + surcharge
+        if total > 400:
+            total -= 50
+        elif total > 200:
+            total -= 20
+        group_discount = total * 0.10
+        expected = total - group_discount
+        cost = self.system.calculate_cost()
+        self.assertAlmostEqual(cost, expected)
+
 
 if __name__ == "__main__":
     unittest.main()
