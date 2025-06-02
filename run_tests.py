@@ -1,6 +1,7 @@
 import unittest
 from gym import GymMembershipSystem
 
+
 class GymMembershipSystemTest(unittest.TestCase):
     def setUp(self):
         self.system = GymMembershipSystem()
