@@ -15,7 +15,6 @@ class GymMembershipSystem:
         }
         self.selected_plan = None
         self.selected_features = []
-        self.is_premium = False
         self.group_members = 1
 
     def display_plans(self):
@@ -27,7 +26,6 @@ class GymMembershipSystem:
         plan = input("Select a membership plan: ").title()
         if plan in self.membership_plans:
             self.selected_plan = plan
-            self.is_premium = (plan == 'Premium')
         else:
             print("Invalid plan selected. Please try again.")
             self.select_plan()
@@ -50,8 +48,8 @@ class GymMembershipSystem:
         features_cost = sum(self.additional_features[f] for f in self.selected_features)
         total_cost = base_cost + features_cost
 
-        # Premium Features Surcharge
-        if self.is_premium:
+        # Apply 15% surcharge dynamically if plan is Premium
+        if self.selected_plan == 'Premium':
             surcharge = total_cost * 0.15
             print(f"Applying 15% surcharge for premium features: +${surcharge:.2f}")
             total_cost += surcharge
